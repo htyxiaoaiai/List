@@ -1,0 +1,76 @@
+#ifndef __LINK_LIST__H__
+#define __LINK_LIST__H__
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+
+typedef int DataType;
+
+typedef struct LinkNode
+{
+	DataType data;
+	struct LinkNode *next;
+}LinkNode, *pLinkNode, *pList;
+
+void InitLinkList(pList* pHead);
+void Destroy(pList *pHead);
+void PushBack(pList* pHead, DataType x);
+void PopBack(pList* pHead);
+void PushFront(pList* pHead, DataType x);
+void PopFront(pList* pHead);
+void PrintList(pList list);
+
+int GetListLength(pList head);
+pLinkNode Find(pList head, DataType x);
+void Insert(pList *pHead, pLinkNode pos, DataType x);
+void Remove(pList *pHead, DataType x);
+void RemoveAll(pList *pHead, DataType x);
+void Erase(pList *pHead, pLinkNode pos);
+
+
+
+//删除非尾节点-----1
+void EraseNotTail(pLinkNode pos);
+
+//反转（逆序）链表--2
+void ReverseList(pList* pplist);
+
+//排序链表（冒泡）--3
+void BubbleSort(pList * pplist);
+
+// 删除非尾结点----4
+void DelNonTailNode(pLinkNode pos);
+
+// 在当前节点前插入一个数据x-----5
+void InsertFrontNode(pLinkNode pos, DataType x);
+
+//合并两个有序列表-----6
+pLinkNode Merge(pList l1, pList l2);
+
+//查找链表的中间节点---7
+pLinkNode FindMidNode(pList head);
+
+// 删除单链表的倒数第k个节点(k > 1 && k < 链表的总长度)----9
+// 时间复杂度O(N)
+void DelKNode(pList *pplist, int k);
+
+// 【链表带环问题】-----10
+// 判断链表是否带环, 若链表带环则求环的长度和相遇节点，不带环返回-1
+pLinkNode CheckCycle(pList pList);
+int GetCircleLength(pLinkNode meet);
+//FindEntryNode()
+// 获取环入口点
+pLinkNode GetCycleEntryNode(pList list, pLinkNode meetNode);
+
+// 【链表相交问题】
+//
+// 判断两个链表是否相交，假设两个链表都不带环。
+// 求环的交点，长链表先走n步（n为两链表的长度差），然后再一起走，第一个相遇点则为交点。
+//
+int CheckCross(pList list1, pList list2);
+
+pLinkNode GetCrossNode(pList list1, pList list2);
+
+#endif // !__LINK_LIST__H__
+
