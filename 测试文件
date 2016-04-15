@@ -1,0 +1,118 @@
+//#define _CRT_SECURE_NO_WARNINGS
+//#include "LinkList.h"
+//void test1()
+//{
+//	pList myList = NULL;
+//	InitLinkList(&myList);
+//	PushBack(&myList, 1);
+//	PushBack(&myList, 2);
+//	PushBack(&myList, 3);
+//	PushBack(&myList, 4);
+//	PrintList(myList);
+//	printf("the length is >:%d\n",GetListLength(myList));
+//	PopBack(&myList);
+//	PrintList(myList);
+//	PopBack(&myList);
+//	PrintList(myList);
+//	printf("the length is >:%d\n", GetListLength(myList));
+//	PopBack(&myList);
+//	PrintList(myList);
+//	PopBack(&myList);
+//	PrintList(myList);
+//	printf("the length is >:%d\n", GetListLength(myList));
+//}
+//
+//void test2()
+//{
+//	pList myList = NULL;
+//	pLinkNode ret = NULL;
+//	InitLinkList(&myList);
+//	PushFront(&myList, 1);
+//	PushFront(&myList, 2);
+//	PushFront(&myList, 3);
+//	PushFront(&myList, 4);
+//	PushFront(&myList, 4);
+//	PushFront(&myList, 4);
+//	PrintList(myList);
+//	/*RemoveAll(&myList, 1);
+//	RemoveAll(&myList, 4);*/
+//	/*Remove(&myList, 1);
+//	Remove(&myList, 4);*/
+//	/*PrintList(myList);*/
+//	ret = Find(myList, 1);
+//	if (ret != NULL)
+//	{
+//		printf("%d\n", ret->data);
+//	}
+//	Erase(&myList, ret);
+//	PrintList(myList);
+//	Destroy(&myList);
+//	/*Insert(&myList, ret, 5);
+//	PrintList(myList);*/
+//	/*printf("the length is >:%d\n", GetListLength(myList));
+//	PopFront(&myList);
+//	PrintList(myList);
+//	PopFront(&myList);
+//	PrintList(myList);
+//	printf("the length is >:%d\n", GetListLength(myList));
+//	PopFront(&myList);
+//	PrintList(myList);
+//	PopFront(&myList);
+//	PrintList(myList);
+//	printf("the length is >:%d\n", GetListLength(myList));*/
+//}
+//void test3()//单链表的面试
+//{
+//	pList myList = NULL;
+//	pLinkNode ret = NULL;
+//	InitLinkList(&myList);
+//	PushFront(&myList, 1);
+//	PushFront(&myList, 2);
+//	PushFront(&myList, 3);
+//	PushFront(&myList, 4);
+//	PushFront(&myList, 5);
+//	PushFront(&myList, 4);
+//	BubbleSort(&myList);
+//	PrintList(myList);
+//	ReverseList(&myList);
+//	BubbleSort(&myList);
+//	PrintList(myList);
+//	ret = Find(myList, 5);
+//	if (ret != NULL)
+//	{
+//		printf("%d\n", ret->data);
+//	}
+//	InsertFrontNode(ret, 6); 
+//	/*PrintList(myList);
+//	EraseNotTail(ret);*/
+//	PrintList(myList);
+//}
+//void test4()
+//{
+//	pList myList = NULL;
+//	pList ret = NULL;
+//	InitLinkList(&myList);
+//	PushBack(&myList, 1);
+//	PushBack(&myList, 2);
+//	PushBack(&myList, 5);
+//	PushBack(&myList, 8);
+//	PushBack(&myList, 11);
+//	PrintList(myList);
+//	ret = FindMidNode(myList);
+//	printf("%d\n", ret->data);
+//	//InitLinkList(&list);
+//	//PushBack(&list, 4);
+//	///*PushBack(&list, 11);
+//	//PushBack(&list, 12);
+//	//PushBack(&list, 13);
+//	//PushBack(&list, 14);
+//	//PushBack(&list, 14);*/
+//	//PrintList(list);
+//	//PrintList(Merge(myList, list));
+//}
+//int main()
+//{
+//	test4();
+//	system("pause");
+//	return 0;
+//}
