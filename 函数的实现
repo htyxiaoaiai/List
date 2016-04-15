@@ -1,0 +1,691 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include "LinkList.h"
+
+void InitLinkList(pList* pHead)
+{
+	assert(pHead);
+	*pHead = NULL;
+}
+
+pLinkNode BuyNode(DataType x)
+{
+	pLinkNode cur = NULL;
+	cur = (pLinkNode)malloc(sizeof(LinkNode));
+	cur->data = x;
+	cur->next = NULL;
+	return cur;
+}
+
+void Destroy(pList *pHead)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode del = NULL;
+	assert(pHead);
+	while (cur)
+	{
+		del = cur;
+		cur = cur->next;
+		free(del);
+		del = NULL;
+	}
+
+}
+void PushBack(pList* pHead, DataType x)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode newNode = BuyNode(x);//创建新节点
+	assert(pHead);
+	if (cur == NULL)//没有节点
+	{
+		*pHead = newNode;
+		return;
+	}
+	while (cur->next)
+	{
+		cur = cur->next;
+	}
+	cur->next = newNode;
+
+}
+
+void PopBack(pList* pHead)
+{
+	pLinkNode cur = *pHead;
+	assert(pHead);
+	if (*pHead == NULL)//没有节点
+	{
+		return;
+	}
+	else if (cur->next == NULL)//一个节点
+	{
+		free(*pHead);
+		*pHead = NULL;
+	}
+	else
+	{
+		pLinkNode del = NULL;
+		while (cur->next->next)
+		{
+			cur = cur->next;
+		}
+		del = cur->next;
+		free(del);
+		cur->next = NULL;
+		del = NULL;
+	}
+}
+
+void PushFront(pList* pHead, DataType x)
+{
+	assert(pHead);
+	pLinkNode newNode = BuyNode(x);
+	if (*pHead == NULL)//一个结点
+	{
+		*pHead = newNode;
+		return;
+	}
+	newNode->next = *pHead;
+	*pHead = newNode;
+}
+
+void PopFront(pList* pHead)
+{
+	assert(*pHead);
+	if (*pHead == NULL)//没有结点
+	{
+		return;
+	}
+	else
+	{
+		pLinkNode del = *pHead;
+		*pHead = (*pHead)->next;
+		free(del);
+		del = NULL;
+	}
+}
+
+void PrintList(pList list)
+{
+	if (list == NULL)
+	{
+		printf("单链表为空！\n");
+		return;
+	}
+	printf("the list is > :");
+	while (list)
+	{
+		printf("%d ", list->data);
+		list = list->next;
+	}
+	printf("\n");
+}
+
+int GetListLength(pList head)
+{
+	int count = 0;
+	while (head)
+	{
+		count++;
+		head = head->next;
+	}
+	return count;
+}
+
+pLinkNode Find(pList head, DataType x)
+{
+	pLinkNode cur = head;
+	while (cur)
+	{
+		if (cur->data == x)
+		{
+			return cur;
+		}
+		else
+		{
+			cur = cur->next;
+		}
+	}
+	return NULL;
+}
+
+void Insert(pList *pHead, pLinkNode pos, DataType x)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode newNode = BuyNode(x);
+	assert(pHead);
+	assert(pos);
+	if (cur == pos)//第一个节点前插入
+	{
+		newNode->next = cur;
+		*pHead = newNode;
+		return;
+	}
+	while ((cur->next != pos) && (cur->next != NULL))//后边的结点插入
+	{
+		cur = cur->next;
+	}
+	newNode->next = cur->next;
+	cur->next = newNode;
+}
+
+void Remove(pList *pHead, DataType x)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode del = NULL;
+	assert(pHead);
+	if (cur == NULL)//没有节点
+	{
+		return;
+	}
+	else if (cur->data == x)//第一个结点相等
+	{
+		*pHead = cur->next;
+		free(cur);
+		cur = NULL;
+	}
+	else //有两个以上结点
+	{
+		while ((cur->next != NULL)&&(cur->next->data != x))
+		{
+			cur = cur->next;
+		}
+		if (cur->next == NULL)//没有找到
+		{
+			return;
+		}
+		else//找到
+		{
+			del = cur->next;
+			cur->next = cur->next->next;
+			free(del);
+			del = NULL;
+		}
+	}
+}
+
+void RemoveAll(pList *pHead, DataType x)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode del = NULL;
+	assert(pHead);
+	if (cur == NULL)//链表为空
+	{
+		return;
+	}
+	while (cur->next != NULL)
+	{
+		if (cur->data == x)//第一个结点相等
+		{
+			*pHead = cur->next;
+			free(cur);
+			cur = NULL;
+			cur = *pHead;
+		}
+		else //有两个以上结点
+		{
+			while ((cur->next != NULL) && (cur->next->data != x))
+			{
+				cur = cur->next;
+			}
+			if (cur->next == NULL)//没有找到
+			{
+				break;
+			}
+			else//找到
+			{
+				del = cur->next;
+				cur->next = cur->next->next;
+				free(del);
+				del = NULL;
+			}
+		}
+	}
+}
+
+void Erase(pList *pHead, pLinkNode pos)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode del = NULL;
+	assert(pHead);
+	assert(pos);
+	if (cur == pos)//删除第一个节点
+	{
+		*pHead = cur->next;
+		free(cur);
+		cur = NULL;
+		return;
+	}
+	while ((cur->next != pos) && (cur->next != NULL))//删除后边的结点
+	{
+		cur = cur->next;
+	}
+	if (cur->next == NULL)//没有找到
+	{
+		return;
+	}
+	else//找到
+	{
+		del = cur->next;
+		cur->next = cur->next->next;
+		free(del);
+		del = NULL;
+	}
+}
+
+
+
+//删除非尾节点-----1
+void EraseNotTail(pLinkNode pos)
+{
+	pLinkNode del = NULL;
+	assert(pos);
+	del = pos->next;
+	pos->data = pos->next->data;
+	pos->next = pos->next->next;
+	free(del);
+	del = NULL;
+}
+
+//反转（逆序）链表--2
+void ReverseList(pList* pHead)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode prev = NULL;
+	pList pNewHead = NULL;
+	assert(pHead);
+	if (cur == NULL)
+	{
+		return;
+	}
+	else if (cur->next == NULL)//一个节点
+	{
+		return;
+	}
+	while (cur)
+	{
+		prev = cur;
+		cur = cur->next;
+		prev->next = pNewHead;
+		pNewHead = prev;
+	}
+	*pHead = pNewHead;
+}
+
+//排序链表（冒泡）--3
+void BubbleSort(pList * pHead)
+{
+	pLinkNode cur = *pHead;
+	pLinkNode end = NULL;
+	int change = 1;
+	assert(pHead);
+	if (*pHead == NULL)
+	{
+		return;
+	}
+	else if (cur->next == NULL)
+	{
+		return;
+	}
+	while ((cur != end)&&(change))//控制排序几轮
+	{
+		change = 0;
+		while ((cur)&&(cur->next != end))//排序
+		{
+			change = 1;
+			if (cur->data > cur->next->data)
+			{
+				DataType tmp = cur->data;
+				cur->data = cur->next->data;
+				cur->next->data = tmp;
+			}
+			cur = cur->next;
+		}
+		end = cur;
+		cur = *pHead;
+	}
+}
+
+
+// 在当前节点前插入一个数据x-----5
+void InsertFrontNode(pLinkNode pos, DataType x)
+{
+	pLinkNode newNode = BuyNode(x);
+	assert(pos);
+	newNode->next = pos->next;
+	pos->next = newNode;
+	DataType tmp = pos->data;
+	pos->data = pos->next->data;
+	pos->next->data = tmp;
+}
+
+//合并两个有序列表-----6
+pLinkNode Merge(pList l1, pList l2)
+{
+	pList pNewHead = NULL;
+	pLinkNode cur = NULL;
+	assert(l1);
+	assert(l2);
+	if (l1 == l2)//链表相等
+	{
+		return l1;
+	}
+	if ((l1 == NULL) && (l2 != NULL))//L1为空
+	{
+		return l2;
+	}
+	if ((l1 != NULL) && (l2 == NULL))//l2为空
+	{
+		return l1;
+	}
+	if (l1->data < l2->data)
+	{
+		pNewHead = l1;
+		l1 = l1->next;
+		pNewHead->next = NULL;
+	}
+	else
+	{
+		pNewHead = l2;
+		l2 = l2->next;
+		pNewHead->next = NULL;
+		
+	}
+	cur = pNewHead;
+	while ((l1) && (l2))
+	{
+		if (l1->data < l2->data)
+		{
+			cur->next = l1;
+			l1 = l1->next;
+		}
+		else
+		{
+			cur->next = l2;
+			l2 = l2->next;
+		}
+		cur = cur->next;
+	}
+	if(l1==NULL)
+	{
+		cur->next = l2;
+	}
+	else
+	{
+		cur->next= l1;
+	}
+	return pNewHead;
+}
+
+
+
+//合并两个有序列表-----6递归实现
+pLinkNode _Merge(pList l1, pList l2)
+{
+	pList pNewHead = NULL;
+	pLinkNode cur = NULL;
+	assert(l1);
+	assert(l2);
+	if (l1 == l2)//链表相等
+	{
+		return l1;
+	}
+	if ((l1 == NULL) && (l2 != NULL))//L1为空
+	{
+		return l2;
+	}
+	if ((l1 != NULL) && (l2 == NULL))//l2为空
+	{
+		return l1;
+	}
+	if (l1->data < l2->data)
+	{
+		pNewHead = l1;
+		pNewHead->next = _Merge(l1->next, l2);
+	}
+	else
+	{
+		pNewHead = l2;
+		pNewHead->next = _Merge(l1, l2->next);
+
+	}
+	return pNewHead;
+}
+
+//查找链表的中间节点---7
+pLinkNode FindMidNode(pList head)
+{
+	pLinkNode fast = head;
+	pLinkNode slow = head;
+	assert(head);
+	if (head == NULL)
+	{
+		return NULL;
+	}
+	while ((fast) && (fast->next)&&(fast->next->next))//长度为偶数时，返回第一个
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+	}
+	return slow;
+
+}
+
+// 删除单链表的倒数第k个节点(k > 1 && k < 链表的总长度)----9
+// 时间复杂度O(N)
+void DelKNode(pList *pHead, int k)
+{
+	assert(pHead);
+	assert(k > 0);
+	pLinkNode fast = *pHead;
+	pLinkNode slow = *pHead;
+	pLinkNode del = NULL;
+	pLinkNode cur = *pHead;
+	while ((k)&&(fast))
+	{
+		fast = fast->next;
+		k--;
+	}
+	if ((fast==NULL)&&(k))
+	{
+		printf("参数错误，链表长度不够\n");
+		return;
+	}
+	while (fast)
+	{
+		fast = fast->next;
+		cur = slow;
+		slow = slow->next;
+	}
+	del = slow;
+	if (slow == *pHead)//删除第一个节点
+	{
+		*pHead = slow->next;
+	}
+	else//删除的不是第一个节点
+	{
+		cur->next = slow->next;
+	}
+	free(del);
+	del = NULL;
+}
+
+// 【链表带环问题】-----10
+// 判断链表是否带环, 若链表带环则求环的长度和相遇节点，不带环返回-1
+pLinkNode CheckCycle(pList pList)
+{
+	pLinkNode fast = pList;
+	pLinkNode slow = pList;
+	assert(pList);
+	while ((fast) && (fast->next))
+	{
+		fast = fast->next->next;
+		slow = slow->next;
+		if (slow == fast)
+		{
+			return slow;
+		}//存在环，返回环相遇的指针
+	}
+	return NULL;//不存在环
+
+
+}
+//计算环的长度
+int GetCircleLength(pLinkNode meet)
+{
+	pLinkNode start = meet;
+	int count = 0;
+	do
+	{
+		count++;
+		start = start->next;
+	} while (start != meet);
+	return count;
+}
+
+//FindEntryNode()
+// 获取环入口点
+//利用公式
+
+pLinkNode GetCycleEntryNode(pList list, pLinkNode meetNode)
+{
+	pLinkNode start = list;
+	pLinkNode end = meetNode;
+	while (start != end)
+	{
+		start = start->next;
+		end = end->next;
+	}
+	return start;
+}
+
+//从交点处分开，转化为链表相交问题
+pLinkNode GetCycleNode(pList list, pLinkNode meetNode)
+{
+	pLinkNode cross = NULL;
+	cross = GetCrossNode(list,meetNode);
+	return cross;
+}
+
+// 【链表相交问题】
+//
+// 判断两个链表是否相交，假设两个链表都不带环。
+//
+//判断两条链表是否相交
+int CheckCross(pList list1, pList list2)
+{
+	pLinkNode l1 = list1;
+	pLinkNode l2 = list2;
+	while (l1&&l1->next)
+	{
+		l1 = l1->next;
+	}
+	while (l2&&l2->next)
+	{
+		l2 = l2->next;
+	}
+	if (l1 == l2)
+	{
+		return 1;//相交
+	}
+	else
+	{
+		return 0;//不相交
+	}
+}
+
+// 求环的交点，长链表先走n步（n为两链表的长度差），然后再一起走，第一个相遇点则为交点。
+pLinkNode GetCrossNode(pList list1, pList list2)
+{
+	int length1 = GetListLength(list1);
+	int length2 = GetListLength(list2);
+	int count = 0;
+	pLinkNode l1 = list1;
+	pLinkNode l2 = list2;
+	if (length1 > length2)
+	{
+		count = length1 - length2;
+		while ((--count) && (l1) && (l1->next))
+		{
+			l1 = l1->next;
+		}
+		while ((l1) && (l1->next))
+		{
+			l1 = l1->next;
+			l2 = l2->next;
+			if (l1 == l2)
+			{
+				return l1;//相交
+			}
+		}
+	}
+	else if (length1 <length2)
+	{
+		count = length2 - length1;
+		while ((--count) && (l2) && (l2->next))
+		{
+			l2 = l2->next;
+		}
+		while ((l1) && (l1->next))
+		{
+			l1 = l1->next;
+			l2 = l2->next;
+			if (l1 == l2)
+			{
+				return l1;//相交
+			}
+		}
+	}
+	return NULL;//不相交
+}
+
+
+#include<stdio.h>
+
+
+int MoreThanHalfNum_Solution(int* numbers) {
+	if (numbers == NULL)
+	{
+		return 0;
+	}
+	int size = 9;
+	int count = 1;
+	int num = numbers[0];
+	for (int i = 1; i<size; i++)
+	{
+		if (num == numbers[i])
+		{
+			count++;
+		}
+		else
+		{
+			count--;
+		}
+		if (count == 0)
+		{
+			num = numbers[++i];
+			count = 1;
+		}
+	}
+	count = 0;
+	for (int j = 0; j < size; j++)
+	{
+		if (num == numbers[j])
+		{
+			count++;
+		}
+	}
+	if (count > size / 2)
+	{
+		return num;
+	}
+	return 0;
+
+}
+
+int main()
+{
+	int arr[9] = { 1,2,2,2,1,1,2,2,7 };
+	printf("%d\n", MoreThanHalfNum_Solution(arr));
+	getchar();
+	return 0;
+}
